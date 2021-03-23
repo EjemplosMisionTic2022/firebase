@@ -1,4 +1,4 @@
-import 'package:f_202110_firebase/pages/firebase_central.dart';
+import 'package:f_202110_firebase/pages/base/firebase_central.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

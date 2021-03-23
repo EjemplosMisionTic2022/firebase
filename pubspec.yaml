@@ -29,6 +29,10 @@ dependencies:
   provider: ^4.0.1
   flutter_signin_button: ^1.1.0
   firebase_database: ^6.1.0
+  cloud_firestore: "^1.0.1"
+  prompt_dialog: ^1.0.0
+
+
 
 dev_dependencies:
   flutter_test:
