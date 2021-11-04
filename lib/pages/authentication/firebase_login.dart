@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class FirebaseLogIn extends StatefulWidget {
-  const FirebaseLogIn({Key key}) : super(key: key);
-
   @override
   _FirebaseLogInState createState() => _FirebaseLogInState();
 }
@@ -19,7 +17,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: theEmail, password: thePassword);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("user-not-found");
       } else if (e.code == 'wrong-password') {
@@ -52,7 +50,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 controller: this.controllerEmail,
                 decoration: InputDecoration(labelText: "Email address"),
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Enter email";
                   } else if (!value.contains('@')) {
                     return "Enter valid email address";
@@ -68,7 +66,7 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 keyboardType: TextInputType.number,
                 obscureText: true,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return "Enter password";
                   } else if (value.length < 6) {
                     return "Password should have at least 6 characters";
@@ -82,8 +80,8 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
               OutlinedButton(
                   onPressed: () {
                     final form = _formKey.currentState;
-                    form.save();
-                    if (_formKey.currentState.validate()) {
+                    form!.save();
+                    if (_formKey.currentState!.validate()) {
                       _login(controllerEmail.text, controllerPassword.text);
                     }
                   },

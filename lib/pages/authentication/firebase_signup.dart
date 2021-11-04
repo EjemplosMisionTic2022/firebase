@@ -18,7 +18,7 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       _buildDialog(context, "Sign up", "Sign up ok").then((value) {
-        _formKey.currentState.reset();
+        _formKey.currentState!.reset();
         Navigator.of(context).pop();
       });
     } on FirebaseAuthException catch (e) {
@@ -72,7 +72,7 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
                           decoration:
                               InputDecoration(labelText: "Email address"),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Enter email";
                             } else if (!value.contains('@')) {
                               return "Enter valid email address";
@@ -88,7 +88,7 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
                           keyboardType: TextInputType.number,
                           obscureText: true,
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Enter password";
                             } else if (value.length < 6) {
                               return "Password should have at least 6 characters";
@@ -102,8 +102,8 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
                         TextButton(
                             onPressed: () {
                               final form = _formKey.currentState;
-                              form.save();
-                              if (_formKey.currentState.validate()) {
+                              form!.save();
+                              if (_formKey.currentState!.validate()) {
                                 _signup(context, controllerEmail.text,
                                     controllerPassword.text);
                               }

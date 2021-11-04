@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 
 class FireStorePage extends StatelessWidget {
-  CollectionReference baby = FirebaseFirestore.instance.collection('baby');
-
+  final CollectionReference baby =
+      FirebaseFirestore.instance.collection('baby');
+  final Stream<QuerySnapshot> _usersStream =
+      FirebaseFirestore.instance.collection('baby').snapshots();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('baby').snapshots(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _usersStream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text('Something went wrong'));
@@ -20,12 +22,12 @@ class FireStorePage extends StatelessWidget {
 
         if (!snapshot.hasData) return LinearProgressIndicator();
 
-        return _buildList(context, snapshot.data.docs);
+        return _buildList(context, snapshot.data!);
       },
     );
   }
 
-  Future<void> addBaby(BuildContext context) {
+  Future<void> addBaby(BuildContext context) async {
     getName(context).then((value) {
       return baby
           .add({'name': value, 'votes': 0})
@@ -35,7 +37,7 @@ class FireStorePage extends StatelessWidget {
   }
 
   Future<String> getName(BuildContext context) async {
-    String result = await prompt(
+    String? result = await prompt(
       context,
       title: Text('Adding a baby'),
       initialValue: '',
@@ -53,11 +55,12 @@ class FireStorePage extends StatelessWidget {
     return Future.error('cancel');
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  Widget _buildList(BuildContext context, QuerySnapshot<Object?> snapshot) {
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.only(top: 20.0),
-        children: snapshot.map((data) => _buildItem(context, data)).toList(),
+        children:
+            snapshot.docs.map((data) => _buildItem(context, data)).toList(),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

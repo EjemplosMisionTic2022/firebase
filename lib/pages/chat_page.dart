@@ -1,21 +1,20 @@
 import 'package:f_202110_firebase/model/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key key}) : super(key: key);
-
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
   List<Message> messages = [];
-  TextEditingController _controller;
-  ScrollController _scrollController;
+  late TextEditingController _controller;
+  late ScrollController _scrollController;
   bool _needsScroll = false;
 
   @override
@@ -60,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _list() {
-    String uid = FirebaseAuth.instance.currentUser.uid;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     print('Current user $uid');
     return ListView.builder(
       itemCount: messages.length,
@@ -73,7 +72,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<String> _sendMsg(String text) {
-    String uid = FirebaseAuth.instance.currentUser.uid;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     try {
       databaseReference
           .child("fluttermessages")
@@ -122,7 +121,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToEnd());
     return Container(
       child: Column(
         children: [Expanded(flex: 4, child: _list()), _textInput()],

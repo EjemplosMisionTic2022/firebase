@@ -39,8 +39,6 @@ class MyApp extends StatelessWidget {
 }
 
 class Wrong extends StatelessWidget {
-  const Wrong({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,8 +48,6 @@ class Wrong extends StatelessWidget {
 }
 
 class Loading extends StatelessWidget {
-  const Loading({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,8 +57,6 @@ class Loading extends StatelessWidget {
 }
 
 class Test extends StatelessWidget {
-  const Test({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
 class Message {
-  String key;
+  String? key;
   String text;
   String user;
 
