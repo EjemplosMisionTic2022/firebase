@@ -1,9 +1,20 @@
-import 'package:f_202110_firebase/pages/base/firebase_central.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
+
+import 'domain/controller/firestore_controller.dart';
+import 'ui/base/firebase_central.dart';
 
 void main() {
   // this is the key
+
+  Loggy.initLoggy(
+    logPrinter: const PrettyPrinter(
+      showColors: true,
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -27,6 +38,7 @@ class MyApp extends StatelessWidget {
             return Wrong();
           }
           if (snapshot.connectionState == ConnectionState.done) {
+            Get.put(FirebaseController());
             return FirebaseCentral();
             //return Test();
           }

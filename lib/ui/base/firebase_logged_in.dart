@@ -1,7 +1,8 @@
-import 'package:f_202110_firebase/pages/chat_page.dart';
-import 'package:f_202110_firebase/pages/firestore_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../chat_page.dart';
+import '../firestore_page.dart';
 
 class FirebaseLoggedIn extends StatefulWidget {
   @override

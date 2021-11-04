@@ -1,4 +1,4 @@
-import 'package:f_202110_firebase/model/message.dart';
+import 'package:f_202110_firebase/data/model/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 

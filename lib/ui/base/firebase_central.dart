@@ -1,7 +1,8 @@
-import 'package:f_202110_firebase/pages/base/firebase_logged_in.dart';
-import 'package:f_202110_firebase/pages/authentication/firebase_login.dart';
+import 'package:f_202110_firebase/ui/authentication/firebase_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'firebase_logged_in.dart';
 
 class FirebaseCentral extends StatelessWidget {
   @override
