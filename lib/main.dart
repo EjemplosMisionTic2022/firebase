@@ -1,3 +1,4 @@
+import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             Get.put(FirebaseController());
+            Get.put(AuthenticationController());
             return FirebaseCentral();
             //return Test();
           }

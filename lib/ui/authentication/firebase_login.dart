@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-
+import 'package:get/get.dart';
 import 'firebase_signup.dart';
 
 class FirebaseLogIn extends StatefulWidget {
@@ -13,18 +12,10 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
   final _formKey = GlobalKey<FormState>();
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
+  AuthenticationController authenticationController = Get.find();
 
   _login(theEmail, thePassword) async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: theEmail, password: thePassword);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print("user-not-found");
-      } else if (e.code == 'wrong-password') {
-        print("wrong-password");
-      }
-    }
+    await authenticationController.login(theEmail, thePassword);
   }
 
   @override
