@@ -1,5 +1,7 @@
+import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../chat_page.dart';
 import '../firestore_page.dart';
@@ -21,8 +23,9 @@ class _FirebaseLoggedInState extends State<FirebaseLoggedIn> {
   }
 
   _logout() async {
+    AuthenticationController authenticationController = Get.find();
     try {
-      await FirebaseAuth.instance.signOut();
+      await authenticationController.logOut();
     } catch (e) {
       print(e);
     }

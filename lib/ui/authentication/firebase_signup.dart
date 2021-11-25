@@ -1,5 +1,7 @@
+import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FirebaseSignUp extends StatefulWidget {
   @override
@@ -10,42 +12,26 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
   final _formKey = GlobalKey<FormState>();
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
+  AuthenticationController authenticationController = Get.find();
 
-  Future<void> _signup(
-      BuildContext context, String email, String password) async {
+  _signup(theEmail, thePassword) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await authenticationController.signUp(theEmail, thePassword);
 
-      _buildDialog(context, "Sign up", "Sign up ok").then((value) {
-        _formKey.currentState!.reset();
-        Navigator.of(context).pop();
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      Get.snackbar(
+        "Sign Up",
+        'OK',
+        icon: Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (err) {
+      Get.snackbar(
+        "Sign Up",
+        err.toString(),
+        icon: Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
-  }
-
-  Future<void> _buildDialog(BuildContext context, String _title, String _msg) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(_title),
-            content: Text(_msg),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"))
-            ],
-          );
-        });
   }
 
   @override
@@ -103,8 +89,10 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
                             onPressed: () {
                               final form = _formKey.currentState;
                               form!.save();
+                              // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
+                              FocusScope.of(context).requestFocus(FocusNode());
                               if (_formKey.currentState!.validate()) {
-                                _signup(context, controllerEmail.text,
+                                _signup(controllerEmail.text,
                                     controllerPassword.text);
                               }
                             },

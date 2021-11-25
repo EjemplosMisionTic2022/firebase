@@ -1,8 +1,10 @@
 import 'package:f_202110_firebase/data/model/message.dart';
+import 'package:f_202110_firebase/domain/controller/chat_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -12,34 +14,23 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<Message> messages = [];
   late TextEditingController _controller;
   late ScrollController _scrollController;
-  bool _needsScroll = false;
+  ChatController chatController = Get.find();
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     _scrollController = ScrollController();
-    databaseReference
-        .child("fluttermessages")
-        .onChildAdded
-        .listen(_onEntryAdded);
-  }
-
-  _onEntryAdded(Event event) {
-    print("Something was added");
-    setState(() {
-      messages.add(Message.fromSnapshot(event.snapshot));
-      _needsScroll = true;
-    });
+    chatController.start();
   }
 
   @override
   void dispose() {
     _controller.dispose();
     _scrollController.dispose();
+    chatController.stop();
     super.dispose();
   }
 
@@ -61,28 +52,22 @@ class _ChatPageState extends State<ChatPage> {
   Widget _list() {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     print('Current user $uid');
-    return ListView.builder(
-      itemCount: messages.length,
-      controller: _scrollController,
-      itemBuilder: (context, index) {
-        var element = messages[index];
-        return _item(element, index, uid);
-      },
-    );
+    return GetX<ChatController>(builder: (controller) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToEnd());
+      return ListView.builder(
+        itemCount: chatController.messages.length,
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          var element = chatController.messages[index];
+          return _item(element, index, uid);
+        },
+      );
+    });
   }
 
-  Future<String> _sendMsg(String text) {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    try {
-      databaseReference
-          .child("fluttermessages")
-          .push()
-          .set({'text': text, 'uid': uid});
-    } catch (error) {
-      print("Error sending msg");
-      return Future.error(error);
-    }
-    return Future.value("ok");
+  Future<void> _sendMsg(String text) async {
+    FocusScope.of(context).requestFocus(FocusNode());
+    await chatController.sendMsg(text);
   }
 
   Widget _textInput() {
@@ -97,6 +82,10 @@ class _ChatPageState extends State<ChatPage> {
                 border: OutlineInputBorder(),
                 labelText: 'Your message',
               ),
+              onSubmitted: (value) {
+                _sendMsg(_controller.text);
+                _controller.clear();
+              },
               controller: _controller,
             ),
           ),
@@ -112,11 +101,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   _scrollToEnd() async {
-    if (_needsScroll) {
-      _needsScroll = false;
-      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
-    }
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
   }
 
   @override

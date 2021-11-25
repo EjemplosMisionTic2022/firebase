@@ -15,7 +15,17 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
   AuthenticationController authenticationController = Get.find();
 
   _login(theEmail, thePassword) async {
-    await authenticationController.login(theEmail, thePassword);
+    print('_login $theEmail $thePassword');
+    try {
+      await authenticationController.login(theEmail, thePassword);
+    } catch (err) {
+      Get.snackbar(
+        "Login",
+        err.toString(),
+        icon: Icon(Icons.person, color: Colors.red),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   @override
@@ -70,11 +80,14 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 height: 20,
               ),
               OutlinedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
+                    FocusScope.of(context).requestFocus(FocusNode());
                     final form = _formKey.currentState;
                     form!.save();
                     if (_formKey.currentState!.validate()) {
-                      _login(controllerEmail.text, controllerPassword.text);
+                      await _login(
+                          controllerEmail.text, controllerPassword.text);
                     }
                   },
                   child: Text("Submit")),
