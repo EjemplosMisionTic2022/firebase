@@ -37,6 +37,7 @@ class _FirebaseSignUpState extends State<FirebaseSignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(),
         body: Center(
             child: Container(
                 padding: EdgeInsets.all(20),

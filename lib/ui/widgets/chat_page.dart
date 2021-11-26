@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -35,8 +36,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _item(Message element, int posicion, String uid) {
-    print('user -> ${element.user}');
-    print(uid == element.user);
+    logInfo('Current user? -> ${uid == element.user} msg -> ${element.text}');
     return Card(
       margin: EdgeInsets.all(4.0),
       color: uid == element.user ? Colors.yellow[200] : Colors.grey[300],
@@ -66,7 +66,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> _sendMsg(String text) async {
-    FocusScope.of(context).requestFocus(FocusNode());
+    //FocusScope.of(context).requestFocus(FocusNode());
+    logInfo("Calling _sendMsg with $text");
     await chatController.sendMsg(text);
   }
 

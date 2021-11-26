@@ -1,10 +1,11 @@
 import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:f_202110_firebase/domain/controller/chat_controller.dart';
 import 'package:f_202110_firebase/domain/controller/firestore_controller.dart';
-import 'package:f_202110_firebase/ui/base/firebase_central.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'firebase_central.dart';
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Firebase demo - MisionTIC',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -1,8 +1,8 @@
-import 'package:f_202110_firebase/ui/authentication/firebase_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'firebase_logged_in.dart';
+import 'pages/authentication/firebase_login.dart';
+import 'pages/content_page.dart';
 
 class FirebaseCentral extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class FirebaseCentral extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return FirebaseLoggedIn();
+          return ContentPage();
         } else {
           return FirebaseLogIn();
         }
