@@ -83,7 +83,7 @@ class ChatController extends GetxController {
           .remove()
           .then((value) => messages.removeAt(index));
     } catch (error) {
-      logError("Error updating msg $error");
+      logError("Error deleting msg $error");
       return Future.error(error);
     }
   }
