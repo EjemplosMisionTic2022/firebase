@@ -12,7 +12,9 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
   final _formKey = GlobalKey<FormState>();
   final controllerEmail = TextEditingController();
   final controllerPassword = TextEditingController();
-  AuthenticationController authenticationController = Get.find();
+
+  //Obten el controlador de autenticacion inyectado
+
 
   _login(theEmail, thePassword) async {
     print('_login $theEmail $thePassword');

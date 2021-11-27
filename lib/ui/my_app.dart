@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'firebase_central.dart';
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  //Añade el futuro de inicializacion de firebase
+  // final Future<> 
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

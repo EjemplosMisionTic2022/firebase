@@ -2,8 +2,8 @@ import 'package:f_202110_firebase/domain/controller/authentication_controller.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'widgets/chat_page.dart';
-import 'widgets/firestore_page.dart';
+import '../widgets/chat_page.dart';
+import '../widgets/firestore_page.dart';
 
 class ContentPage extends StatefulWidget {
   @override
