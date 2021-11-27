@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:f_202110_firebase/data/model/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,18 +9,24 @@ import 'package:loggy/loggy.dart';
 class ChatController extends GetxController {
   final databaseReference = FirebaseDatabase.instance.reference();
   var messages = <Message>[].obs;
-
+  late StreamSubscription<Event> newEntryStreamSubscription;
+  late StreamSubscription<Event> updateEntryStreamSubscription;
   start() {
     messages.clear();
-    databaseReference
+    newEntryStreamSubscription = databaseReference
         .child("fluttermessages")
         .onChildAdded
         .listen(_onEntryAdded);
 
-    databaseReference
+    updateEntryStreamSubscription = databaseReference
         .child("fluttermessages")
         .onChildChanged
         .listen(_onEntryChanged);
+  }
+
+  stop() {
+    newEntryStreamSubscription.cancel();
+    updateEntryStreamSubscription.cancel();
   }
 
   _onEntryChanged(Event event) {
@@ -27,20 +35,6 @@ class ChatController extends GetxController {
       return entry.key == event.snapshot.key;
     });
     messages[messages.indexOf(oldEntry)] = Message.fromSnapshot(event.snapshot);
-  }
-
-  stop() {
-    databaseReference
-        .child("fluttermessages")
-        .onChildAdded
-        .listen(_onEntryAdded)
-        .cancel();
-
-    databaseReference
-        .child("fluttermessages")
-        .onChildChanged
-        .listen(_onEntryChanged)
-        .cancel();
   }
 
   _onEntryAdded(Event event) {
