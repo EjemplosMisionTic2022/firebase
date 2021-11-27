@@ -4,8 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 
-class FireStorePage extends StatelessWidget {
+class FireStorePage extends StatefulWidget {
+  @override
+  State<FireStorePage> createState() => _FireStorePageState();
+}
+
+class _FireStorePageState extends State<FireStorePage> {
   final FirebaseController firebaseController = Get.find();
+
+  @override
+  void initState() {
+    firebaseController.suscribeUpdates();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    firebaseController.unsuscribeUpdates();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +55,8 @@ class FireStorePage extends StatelessWidget {
         child: ListTile(
           title: Text(record.name),
           trailing: Text(record.votes.toString()),
-          onTap: () {
-            record.reference.update({'votes': record.votes + 1});
-          },
+          onTap: () => firebaseController.updateEntry(record),
+          onLongPress: () => firebaseController.deleteEntry(record),
         ),
       ),
     );
