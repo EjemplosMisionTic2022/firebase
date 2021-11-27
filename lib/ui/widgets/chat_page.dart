@@ -41,6 +41,8 @@ class _ChatPageState extends State<ChatPage> {
       margin: EdgeInsets.all(4.0),
       color: uid == element.user ? Colors.yellow[200] : Colors.grey[300],
       child: ListTile(
+        onTap: () => chatController.updateMsg(element),
+        onLongPress: () => chatController.deleteMsg(element, posicion),
         title: Text(
           element.text,
           textAlign: uid == element.user ? TextAlign.right : TextAlign.left,
