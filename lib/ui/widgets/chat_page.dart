@@ -1,4 +1,5 @@
 import 'package:f_202110_firebase/data/model/message.dart';
+import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:f_202110_firebase/domain/controller/chat_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,6 +19,7 @@ class _ChatPageState extends State<ChatPage> {
   late TextEditingController _controller;
   late ScrollController _scrollController;
   ChatController chatController = Get.find();
+  AuthenticationController authenticationController = Get.find();
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _list() {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    String uid = authenticationController.getUid();
     print('Current user $uid');
     return GetX<ChatController>(builder: (controller) {
       WidgetsBinding.instance!.addPostFrameCallback((_) => _scrollToEnd());
@@ -81,6 +83,7 @@ class _ChatPageState extends State<ChatPage> {
           child: Container(
             margin: const EdgeInsets.only(left: 5.0, top: 5.0),
             child: TextField(
+              key: const Key('MsgTextField'),
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Your message',
@@ -94,6 +97,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
         TextButton(
+            key: const Key('sendButton'),
             child: Text('Send'),
             onPressed: () {
               _sendMsg(_controller.text);
