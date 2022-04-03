@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
 class Message {
-  String key;
+  String? key;
   String text;
   String user;
 
@@ -9,8 +9,8 @@ class Message {
 
   Message.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key ?? "0",
-        text = snapshot.value["text"],
-        user = snapshot.value["uid"];
+        text = snapshot.value["text"] ?? "",
+        user = snapshot.value["uid"] ?? "";
 
   toJson() {
     return {

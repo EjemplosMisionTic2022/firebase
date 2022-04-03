@@ -1,14 +1,13 @@
 import 'package:f_202110_firebase/data/model/message.dart';
 import 'package:f_202110_firebase/domain/controller/authentication_controller.dart';
 import 'package:f_202110_firebase/domain/controller/chat_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-final databaseReference = FirebaseDatabase.instance.reference();
+final databaseReference = FirebaseDatabase.instance.ref();
 
 class ChatPage extends StatefulWidget {
   @override

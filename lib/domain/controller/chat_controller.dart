@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
 class ChatController extends GetxController {
-  final databaseReference = FirebaseDatabase.instance.reference();
+  final databaseReference = FirebaseDatabase.instance.ref();
   var messages = <Message>[].obs;
-  late StreamSubscription<Event> newEntryStreamSubscription;
-  late StreamSubscription<Event> updateEntryStreamSubscription;
+  late StreamSubscription<DatabaseEvent> newEntryStreamSubscription;
+  late StreamSubscription<DatabaseEvent> updateEntryStreamSubscription;
   start() {
     messages.clear();
     newEntryStreamSubscription = databaseReference
@@ -29,17 +29,20 @@ class ChatController extends GetxController {
     updateEntryStreamSubscription.cancel();
   }
 
-  _onEntryChanged(Event event) {
+  _onEntryChanged(DatabaseEvent event) {
     print("Something was changed");
     var oldEntry = messages.singleWhere((entry) {
       return entry.key == event.snapshot.key;
     });
+
     messages[messages.indexOf(oldEntry)] = Message.fromSnapshot(event.snapshot);
+    //messages[messages.indexOf(oldEntry)] = event.snapshot.value as Message;
   }
 
-  _onEntryAdded(Event event) {
+  _onEntryAdded(DatabaseEvent event) {
     print("Something was added");
     messages.add(Message.fromSnapshot(event.snapshot));
+    // messages.add(event.snapshot.value as Message);
   }
 
   Future<void> sendMsg(String text) async {
@@ -60,7 +63,7 @@ class ChatController extends GetxController {
     try {
       databaseReference
           .child("fluttermessages")
-          .child(message.key)
+          .child(message.key!)
           .set({'text': 'updated ' + message.text, 'uid': message.user});
     } catch (error) {
       logError("Error updating msg $error");
@@ -73,7 +76,7 @@ class ChatController extends GetxController {
     try {
       databaseReference
           .child("fluttermessages")
-          .child(message.key)
+          .child(message.key!)
           .remove()
           .then((value) => messages.removeAt(index));
     } catch (error) {

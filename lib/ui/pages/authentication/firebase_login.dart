@@ -73,7 +73,6 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                   } else if (value.length < 6) {
                     return "Password should have at least 6 characters";
                   }
-                  return null;
                 },
               ),
               SizedBox(
