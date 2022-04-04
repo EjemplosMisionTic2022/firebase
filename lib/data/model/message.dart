@@ -12,10 +12,10 @@ class Message {
         text = "",
         user = "";
 
-  // Message.fromSnapshot(DataSnapshot snapshot)
-  //     : key = snapshot.key ?? "0",
-  //       text = snapshot.value["text"],
-  //       user = snapshot.value["uid"];
+  Message.fromJson(Map<dynamic, dynamic> json)
+      : key = json['uid'] ?? "0",
+        user = json['uid'] as String,
+        text = json['text'] as String;
 
   toJson() {
     return {

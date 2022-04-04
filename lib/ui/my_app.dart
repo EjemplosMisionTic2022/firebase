@@ -4,6 +4,7 @@ import 'package:f_202110_firebase/domain/controller/firestore_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 
 import 'firebase_central.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print("error ${snapshot.error}");
+            logInfo("error ${snapshot.error}");
             return Wrong();
           }
           if (snapshot.connectionState == ConnectionState.done) {
