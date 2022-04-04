@@ -5,7 +5,7 @@ import 'package:f_202110_firebase/data/model/record.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-class FirebaseController extends GetxController {
+class FirestoreController extends GetxController {
   var _records = <Record>[].obs;
   final CollectionReference baby =
       FirebaseFirestore.instance.collection('baby');

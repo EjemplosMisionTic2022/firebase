@@ -10,17 +10,17 @@ class FireStorePage extends StatefulWidget {
 }
 
 class _FireStorePageState extends State<FireStorePage> {
-  final FirebaseController firebaseController = Get.find();
+  final FirestoreController firestoreController = Get.find();
 
   @override
   void initState() {
-    firebaseController.suscribeUpdates();
+    firestoreController.suscribeUpdates();
     super.initState();
   }
 
   @override
   void dispose() {
-    firebaseController.unsuscribeUpdates();
+    firestoreController.unsuscribeUpdates();
     super.dispose();
   }
 
@@ -29,10 +29,10 @@ class _FireStorePageState extends State<FireStorePage> {
     return Scaffold(
         body: Obx(
           () => ListView.builder(
-              itemCount: firebaseController.entries.length,
+              itemCount: firestoreController.entries.length,
               padding: EdgeInsets.only(top: 20.0),
               itemBuilder: (BuildContext context, int index) {
-                return _buildItem(context, firebaseController.entries[index]);
+                return _buildItem(context, firestoreController.entries[index]);
               }),
         ),
         floatingActionButton: FloatingActionButton(
@@ -55,8 +55,8 @@ class _FireStorePageState extends State<FireStorePage> {
         child: ListTile(
           title: Text(record.name),
           trailing: Text(record.votes.toString()),
-          onTap: () => firebaseController.updateEntry(record),
-          onLongPress: () => firebaseController.deleteEntry(record),
+          onTap: () => firestoreController.updateEntry(record),
+          onLongPress: () => firestoreController.deleteEntry(record),
         ),
       ),
     );
@@ -64,7 +64,7 @@ class _FireStorePageState extends State<FireStorePage> {
 
   Future<void> addBaby(BuildContext context) async {
     getName(context).then((value) {
-      firebaseController.addEntry(value);
+      firestoreController.addEntry(value);
     });
   }
 

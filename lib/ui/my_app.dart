@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             return Wrong();
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            Get.put(FirebaseController());
+            Get.put(FirestoreController());
             Get.put(AuthenticationController());
             Get.put(ChatController());
             return FirebaseCentral();
