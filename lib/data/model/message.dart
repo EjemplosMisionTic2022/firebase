@@ -9,8 +9,13 @@ class Message {
 
   Message.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key ?? "0",
-        text = snapshot.value["text"] ?? "",
-        user = snapshot.value["uid"] ?? "";
+        text = "",
+        user = "";
+
+  // Message.fromSnapshot(DataSnapshot snapshot)
+  //     : key = snapshot.key ?? "0",
+  //       text = snapshot.value["text"],
+  //       user = snapshot.value["uid"];
 
   toJson() {
     return {
