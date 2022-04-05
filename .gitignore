@@ -47,6 +47,6 @@ app.*.map.json
 
 google-services.json
 
-/web/index.html
+web/index.html
 
-/lib/config/configuration.dart
+lib/config/configuration.dart
