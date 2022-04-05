@@ -7,12 +7,12 @@ class Message {
 
   Message(this.key, this.text, this.user);
 
-  Message.fromSnapshot(DataSnapshot snapshot)
-      : assert(snapshot.value['text'] != null),
-        assert(snapshot.value['user'] != null),
-        key = snapshot.key ?? "0",
-        text = snapshot.value["text"],
-        user = snapshot.value["user"];
+  // Message.fromSnapshot(DataSnapshot snapshot)
+  //     : assert(snapshot.value['text'] != null),
+  //       assert(snapshot.value['user'] != null),
+  //       key = snapshot.key ?? "0",
+  //       text = snapshot.value["text"],
+  //       user = snapshot.value["user"];
 
   Message.fromJson(Map<dynamic, dynamic> json)
       : key = json['uid'] ?? "0",
