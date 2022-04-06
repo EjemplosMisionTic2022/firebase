@@ -47,8 +47,11 @@ class _ContentPageState extends State<ContentPage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Firestore"),
           BottomNavigationBarItem(icon: Icon(Icons.business), label: "Chat")
         ],
+        type: BottomNavigationBarType.shifting,
         currentIndex: _selectIndex,
+        iconSize: 40,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.amber[200],
         onTap: _onItemTapped,
       ),
     );

@@ -36,13 +36,14 @@ class ChatController extends GetxController {
     });
 
     final json = event.snapshot.value as Map<dynamic, dynamic>;
-    messages[messages.indexOf(oldEntry)] = Message.fromJson(json);
+    messages[messages.indexOf(oldEntry)] =
+        Message.fromJson(event.snapshot, json);
   }
 
   _onEntryAdded(DatabaseEvent event) {
     print("Something was added");
     final json = event.snapshot.value as Map<dynamic, dynamic>;
-    messages.add(Message.fromJson(json));
+    messages.add(Message.fromJson(event.snapshot, json));
   }
 
   Future<void> sendMsg(String text) async {

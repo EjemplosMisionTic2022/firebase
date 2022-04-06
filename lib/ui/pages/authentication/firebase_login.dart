@@ -51,12 +51,13 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 keyboardType: TextInputType.emailAddress,
                 controller: this.controllerEmail,
                 decoration: InputDecoration(labelText: "Email address"),
-                validator: (value) {
+                validator: (String? value) {
                   if (value!.isEmpty) {
                     return "Enter email";
                   } else if (!value.contains('@')) {
                     return "Enter valid email address";
                   }
+                  return null;
                 },
               ),
               SizedBox(
@@ -67,12 +68,13 @@ class _FirebaseLogInState extends State<FirebaseLogIn> {
                 decoration: InputDecoration(labelText: "Password"),
                 keyboardType: TextInputType.number,
                 obscureText: true,
-                validator: (value) {
+                validator: (String? value) {
                   if (value!.isEmpty) {
                     return "Enter password";
                   } else if (value.length < 6) {
                     return "Password should have at least 6 characters";
                   }
+                  return null;
                 },
               ),
               SizedBox(

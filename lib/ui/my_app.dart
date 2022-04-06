@@ -11,16 +11,16 @@ import 'firebase_central.dart';
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-    options: FirebaseOptions(
-        apiKey: Configuration.apiKey,
-        authDomain: Configuration.authDomain,
-        databaseURL: Configuration.databaseURL,
-        projectId: Configuration.projectId,
-        storageBucket: Configuration.storageBucket,
-        messagingSenderId: Configuration.messagingSenderId,
-        appId: Configuration.appId,
-        measurementId: Configuration.measurementId),
-  );
+      // options: FirebaseOptions(
+      //     apiKey: Configuration.apiKey,
+      //     authDomain: Configuration.authDomain,
+      //     databaseURL: Configuration.databaseURL,
+      //     projectId: Configuration.projectId,
+      //     storageBucket: Configuration.storageBucket,
+      //     messagingSenderId: Configuration.messagingSenderId,
+      //     appId: Configuration.appId,
+      //     measurementId: Configuration.measurementId),
+      );
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
