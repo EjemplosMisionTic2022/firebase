@@ -7,9 +7,12 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
 class ChatController extends GetxController {
-  final databaseReference = FirebaseDatabase.instance.ref();
   var messages = <Message>[].obs;
+
+  final databaseReference = FirebaseDatabase.instance.ref();
+
   late StreamSubscription<DatabaseEvent> newEntryStreamSubscription;
+
   late StreamSubscription<DatabaseEvent> updateEntryStreamSubscription;
   start() {
     messages.clear();

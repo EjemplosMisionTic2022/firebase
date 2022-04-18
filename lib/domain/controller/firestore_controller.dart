@@ -7,11 +7,16 @@ import 'package:loggy/loggy.dart';
 
 class FirestoreController extends GetxController {
   var _records = <Record>[].obs;
-  final CollectionReference baby =
+
+  final CollectionReference babyCollection =
       FirebaseFirestore.instance.collection('baby');
+
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('baby').snapshots();
+
   late StreamSubscription<Object?> streamSubscription;
+
+  List<Record> get entries => _records;
 
   suscribeUpdates() async {
     logInfo('suscribeLocationUpdates');
@@ -29,10 +34,8 @@ class FirestoreController extends GetxController {
     streamSubscription.cancel();
   }
 
-  List<Record> get entries => _records;
-
   addEntry(name) {
-    baby
+    babyCollection
         .add({'name': name, 'votes': 0})
         .then((value) => print("Baby added"))
         .catchError((onError) => print("Failed to add baby $onError"));

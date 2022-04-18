@@ -10,61 +10,20 @@ import 'package:loggy/loggy.dart';
 import 'firebase_central.dart';
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-      // options: FirebaseOptions(
-      //     apiKey: Configuration.apiKey,
-      //     authDomain: Configuration.authDomain,
-      //     databaseURL: Configuration.databaseURL,
-      //     projectId: Configuration.projectId,
-      //     storageBucket: Configuration.storageBucket,
-      //     messagingSenderId: Configuration.messagingSenderId,
-      //     appId: Configuration.appId,
-      //     measurementId: Configuration.measurementId),
-      );
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    Get.put(FirestoreController());
+    Get.put(ChatController());
+    Get.put(AuthenticationController());
+
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Firebase demo - MisionTIC',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-          body: FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            logInfo("error ${snapshot.error}");
-            return Wrong();
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            Get.put(FirestoreController());
-            Get.put(AuthenticationController());
-            Get.put(ChatController());
-            return FirebaseCentral();
-          }
-
-          return Loading();
-        },
-      )),
-    );
-  }
-}
-
-class Wrong extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("Something went wrong")),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text("Loading")),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Firebase demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: FirebaseCentral());
   }
 }
